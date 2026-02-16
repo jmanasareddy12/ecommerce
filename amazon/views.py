@@ -11,10 +11,10 @@ def product_details(request,id):
     return render(request,'store/product_details.html',{'product':product})
 
 def add_to_cart(request,id):
-    cart=Product.session.get('cart',{})
+    cart=request.session.get('cart',{})
     cart[id]=cart.get(id,0)+1
     request.session['cart']=cart
-    return redirect('product_list')
+    return redirect('view_cart',id=id)
 
 def view_cart(request):
     cart=request.session.get('cart',{})
