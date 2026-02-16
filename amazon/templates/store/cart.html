@@ -1,19 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:indianred;
+    margin:0;
+    padding:20px;
+}
+
+h1{
+    color:#222;
+}
+
+.cart-box{
+    background:lightgrey;
+    width:60%;
+    margin:15px auto;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.cart-box img{
+    display:block;
+    margin-bottom:10px;
+    border-radius:5px;
+}
+
+.cart-box h3{
+    margin:5px 0;
+}
+
+.cart-box p{
+    margin:4px 0;
+    color:#333;
+}
+
+.cart-box a{
+    text-decoration:none;
+    background:#007185;
+    color:white;
+    padding:5px 10px;
+    margin-right:5px;
+    border-radius:4px;
+    font-size:14px;
+}
+
+.cart-box a:hover{
+    background:#005f6b;
+}
+
+.total{
+    text-align:center;
+    margin-top:20px;
+}
+
+.empty{
+    text-align:center;
+    font-size:18px;
+}
+
+.continue{
+    display:block;
+    width:200px;
+    margin:20px auto;
+    text-align:center;
+    text-decoration:none;
+    background:#111;
+    color:white;
+    padding:10px;
+    border-radius:5px;
+}
+
+</style>
+</head>
+
+<body>
+
 <center><h1>CART</h1></center>
+
 {% if cart_items %}
+
     {% for item in cart_items %}
-        <h3>{{ item.product.price}}</h3>
-        <p>Price:{{ item.product.price}}</p>
-        <p>Quantity:{{ item.quantity}}</p>
-        <p>Total:{{ item.total }}</p>
+    <div class="cart-box">
+
+        <img src="{{ item.product.image.url }}" width="200">
+
+        <h3>{{ item.product.name }}</h3>
+        <p>Price: ${{ item.product.price }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Total: ${{ item.total }}</p>
 
         <a href="{% url 'increase' item.product.id %}">+</a>
         <a href="{% url 'decrease' item.product.id %}">-</a>
         <a href="{% url 'remove' item.product.id %}">Remove</a>
+
+    </div>
     {% endfor %}
-    <h2>Total : {{ final_amount }} </h2>
+
+    <h2 class="total">Total : ${{ final_amount }}</h2>
+
 {% else %}
-        <p>cart is empty!</p>
+    <p class="empty">Cart is empty!</p>
 {% endif %}
-<a href="{% url 'product_list' %}"> continue shopping..</a>
 
+<a class="continue" href="{% url 'product_list' %}">
+Continue Shopping
+</a>
 
+</body>
+</html>
