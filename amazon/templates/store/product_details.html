@@ -1,61 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Product Detail</title>
+{% extends 'base.html' %}
+{% load static %}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color:darkcyan;
-            margin: 0;
-            padding: 30px;
-        }
+    {% block content %}
+<link rel="stylesheet" href="{% static 'amazon/style.css' %}">
 
-        .product-box {
-            background:burlywood;
-            width: 350px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        h2 {
-            margin-top: 0;
-            color: #222;
-        }
-
-        p {
-            color: #555;
-            line-height: 1.5;
-        }
-
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 14px;
-            background: #222;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        a:hover {
-            background: #444;
-        }
-    </style>
-
-</head>
-
-<body>
-
-<div class="product-box">
+<div class="product-detail">
+    
     <h2>{{ product.name }}</h2>
-        <img src="{{ product.image.url }}" width="200">
-
+    {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% endif %}
     <p>{{ product.description }}</p>
-    <p>price:${{ product.price }}</p>
+    <p>Price: {{ product.price }}</p>
     <a href="{% url 'add_to_cart' product.id %}">ADD TO CART</a>
+ 
 </div>
 
-</body>
-</html>
+   {% endblock %}

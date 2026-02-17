@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import user
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Product(models.Model):
@@ -12,7 +12,7 @@ class Product(models.Model):
         return self.name
     
 class Order(models.Model):
-    user = models.ForeignKey(user,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     total_amount=models.DecimalField(max_digits=8,decimal_places=2)
 
     def __self__(self):

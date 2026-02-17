@@ -1,84 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<style>
+{% extends 'base.html' %}
+{% load static %}
 
-body{
-    font-family: Arial, sans-serif;
-    background:indianred;
-    margin:0;
-    padding:20px;
-}
-
-h1{
-    color:#222;
-}
-
-.cart-box{
-    background:lightgrey;
-    width:60%;
-    margin:15px auto;
-    padding:15px;
-    border:1px solid #ddd;
-    border-radius:6px;
-    box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
-.cart-box img{
-    display:block;
-    margin-bottom:10px;
-    border-radius:5px;
-}
-
-.cart-box h3{
-    margin:5px 0;
-}
-
-.cart-box p{
-    margin:4px 0;
-    color:#333;
-}
-
-.cart-box a{
-    text-decoration:none;
-    background:#007185;
-    color:white;
-    padding:5px 10px;
-    margin-right:5px;
-    border-radius:4px;
-    font-size:14px;
-}
-
-.cart-box a:hover{
-    background:#005f6b;
-}
-
-.total{
-    text-align:center;
-    margin-top:20px;
-}
-
-.empty{
-    text-align:center;
-    font-size:18px;
-}
-
-.continue{
-    display:block;
-    width:200px;
-    margin:20px auto;
-    text-align:center;
-    text-decoration:none;
-    background:#111;
-    color:white;
-    padding:10px;
-    border-radius:5px;
-}
-
-</style>
-</head>
-
-<body>
+{% block content %}
+<link rel="stylesheet" href="{% static 'amazon/style.css' %}">
 
 <center><h1>CART</h1></center>
 
@@ -108,8 +32,6 @@ h1{
 {% endif %}
 
 <a class="continue" href="{% url 'product_list' %}">
-Continue Shopping
+    Continue Shopping
 </a>
-
-</body>
-</html>
+{% endblock %}
