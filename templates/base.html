@@ -8,8 +8,9 @@
 <body>
     <nav>
         <a href="{% url 'product_list' %}">HOME</a>
-        {% if user.is_authenticated %}
-            Welcome {{ user.username }}
+        {% if user.is_authenticated %}<center>
+            Welcome {{ user.username }}</center>
+              
             <a href="{% url 'view_cart' %}">CART</a>
             <a href="{% url 'logout' %}">LOGOUT</a>
         {% else %}
@@ -23,4 +24,4 @@
 
     
 </body>
-</html>
+</html>Sukuna accepts a marriage proposal from a wealthy lord with plans to murder him. Turns out they both had the same idea.
