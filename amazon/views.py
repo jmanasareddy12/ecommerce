@@ -1,5 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product
+from django.contrib.auth import login,authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from .models import Product, Order, OrderItem
+from .forms import RegisterForm, CheckoutForm
 
 def product_list(request):
     products = Product.objects.all()
@@ -74,3 +78,53 @@ def remove(request, id):
 
     request.session['cart'] = cart
     return redirect('view_cart')
+
+def register(request):
+    if request.method == 'POST':
+        form=RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form=RegisterForm()
+    return render(request,'register.html',{'form':form})
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request,data=request.POST)
+        if form.is_valid():
+            user=form.get_user()
+            login(request,user)
+            return redirect('product_list')
+    else:
+        form=AuthenticationForm()
+    return render(request,'login.html',{'form':form})
+
+def user_logout(request):
+    logout(request)
+    return redirect('login145')
+
+
+@login_required
+def checkout(request):
+    cart = request.session.get('cart',{})
+    if request.method == 'POST':
+        form = CheckoutForm(request.POST)
+        if form.is_valid():
+            order= Order.objects.create(user=request.user,total_amount=0)
+            for id in cart:
+                product= Product.objects.get(id=id)
+                quantity=cart[id]
+                total+=product.price*quantity
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=quantity
+                )
+                order.total_amount = total
+                order.save()
+                request.session['cart']={}
+                return redirect('product_list')
+    else:
+        form=CheckoutForm()
+    return render(request,'checkout.html',{'form':form})
