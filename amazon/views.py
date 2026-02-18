@@ -3,11 +3,18 @@ from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
-
 from .models import Product, Order, OrderItem
 from .forms import RegisterForm, CheckoutForm
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import ProductSerializer
 
 
+@api_view(['GET'])
+def product_api(request):
+    products=Product.objects.all()
+    serializer = ProductSerializer(products,many=True)
+    return Response (serializer.data)
 
 def product_list(request):
     products = Product.objects.all()
@@ -152,9 +159,13 @@ def checkout(request):
             order.save()
 
             request.session['cart'] = {}
-            return redirect('product_list')
+            return redirect('order_success')
 
     else:
         form = CheckoutForm()
 
     return render(request, 'checkout.html', {'form': form})
+
+@login_required
+def order_success(request):
+    return render(request,'store/order_success.html')
