@@ -169,8 +169,18 @@ def checkout(request):
 @login_required
 def order_success(request,id):
     order=Order.objects.get(id=id,user=request.user)
-    return render(request,'store/order_success.html')
+    return render(request,'store/order_success.html',{'order':order})
 
 def order_detail(request,id):
     order= Order.objects.get(id=id,user=request.user)
-    return render (request,'store/order_deatail.html',{'order':order})
+    return render (request,'store/order_detail.html',{'order':order})
+
+def product_list(request):
+    query = request.GET.get('q')
+
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.all()
+
+    return render(request, 'store/product_list.html', {'products': products})
