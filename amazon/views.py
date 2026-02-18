@@ -159,13 +159,18 @@ def checkout(request):
             order.save()
 
             request.session['cart'] = {}
-            return redirect('order_success')
+            return redirect('order_success',id=order.id)
 
     else:
         form = CheckoutForm()
 
-    return render(request, 'checkout.html', {'form': form})
+    return render(request, 'store/checkout.html', {'form': form})
 
 @login_required
-def order_success(request):
+def order_success(request,id):
+    order=Order.objects.get(id=id,user=request.user)
     return render(request,'store/order_success.html')
+
+def order_detail(request,id):
+    order= Order.objects.get(id=id,user=request.user)
+    return render (request,'store/order_deatail.html',{'order':order})

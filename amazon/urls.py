@@ -13,7 +13,8 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('checkout/', views.checkout, name='checkout'),
-    path('order_success/', views.order_success, name='order_success'),
+    path('order_success/<int:id>/', views.order_success, name='order_success'),
+    path('order/<int:id>/', views.order_detail, name='order_detail'),
 
 
     path('api/products/',views.product_api),
